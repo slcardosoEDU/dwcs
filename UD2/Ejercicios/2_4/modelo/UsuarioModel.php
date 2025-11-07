@@ -119,19 +119,22 @@ class UsuarioModel extends Model
     }
 
     public static function addUsuario(Usuario $usr): bool
-    { //TODO
+    { 
         $db = null;
         $toret = false;
+        $usr->contrasena = password_hash($usr->contrasena);
         try {
-            $sql = "INSERT INTO USUARIO (nombre, descripcion, usuario_id) 
-                    VALUES (:nombre, :descripcion, :usuario_id)";
+            $sql = "INSERT INTO USUARIO (nombre, email, rol_id, contrasena) 
+                    VALUES (:nombre, :email, :rol_id, :contrasena)";
 
             $db = parent::getConnection();
             $stmt = $db->prepare($sql);
 
             $stmt->bindValue(':nombre', $usr->nombre, PDO::PARAM_STR);
-            $stmt->bindValue(':descripcion', $usr->descripcion, PDO::PARAM_STR);
-            $stmt->bindValue(':usuario_id', $usr->responsable_id, PDO::PARAM_INT);
+            $stmt->bindValue(':email', $usr->email, PDO::PARAM_STR);
+            $stmt->bindValue(':rol_id', $usr->rol_id, PDO::PARAM_INT);
+            $stmt->bindValue(':contrasena', $usr->contrasena, PDO::PARAM_STR);
+
 
             $toret = $stmt->execute();
 
@@ -151,21 +154,51 @@ class UsuarioModel extends Model
         $toret = false;
         try {
             $sql = "UPDATE USUARIO 
-                    SET nombre = :nombre, descripcion = :descripcion, usuario_id = :usuario_id 
+                    SET nombre = :nombre, email = :email, rol_id = :rol_id
                     WHERE id = :id";
 
             $db = parent::getConnection();
             $stmt = $db->prepare($sql);
 
             $stmt->bindValue(':nombre', $usr->nombre, PDO::PARAM_STR);
-            $stmt->bindValue(':descripcion', $usr->descripcion, PDO::PARAM_STR);
-            $stmt->bindValue(':usuario_id', $usr->responsable_id, PDO::PARAM_INT);
+            $stmt->bindValue(':email', $usr->email, PDO::PARAM_STR);
+            $stmt->bindValue(':rol_id', $usr->rol_id, PDO::PARAM_INT);
             $stmt->bindValue(':id', $usr->id, PDO::PARAM_INT);
+
 
             $toret = $stmt->execute();
 
         } catch (PDOException $e) {
             error_log("Error en updateUsuario: " . $e->getMessage());
+
+        } finally {
+            $db = null;
+        }
+
+        return $toret;
+    }
+
+    public static function updateContrasenaUsuario(Usuario $usr): bool
+    {
+        $db = null;
+        $toret = false;
+        $usr->contrasena = password_hash($usr->contrasena);
+        try {
+            $sql = "UPDATE USUARIO 
+                    SET contrasena = :contrasena
+                    WHERE id = :id";
+
+            $db = parent::getConnection();
+            $stmt = $db->prepare($sql);
+
+            $stmt->bindValue(':contrasena', $usr->contrasena, PDO::PARAM_STR);
+            $stmt->bindValue(':id', $usr->id, PDO::PARAM_INT);
+
+
+            $toret = $stmt->execute();
+
+        } catch (PDOException $e) {
+            error_log("Error en updateContrasenaUsuario: " . $e->getMessage());
 
         } finally {
             $db = null;
