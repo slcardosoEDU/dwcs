@@ -141,4 +141,33 @@ class RolModel extends Model
         return $toret;
     }
 
+    public static function hasAcces(string $pagina, int $rol_id): bool
+    {
+        $db = null;
+        $toret = false;
+        try {
+            $sql = "SELECT *
+                    FROM ROL_PERMISO rp
+                    INNER JOIN PERMISO p ON p.id = rp.permiso_id
+                    WHERE rp.rol_id = :rol_id AND p.pagina LIKE :pagina";
+
+            $db = parent::getConnection();
+            $stmt = $db->prepare($sql);
+
+            $stmt->bindValue(':rol_id', $rol_id, PDO::PARAM_INT);
+            $stmt->bindValue(':pagina', $pagina, PDO::PARAM_STR);
+            $toret = $stmt->execute();
+            $toret = $stmt->fetch() ? true : false;
+            $stmt->closeCursor();
+
+        } catch (PDOException $e) {
+            error_log("Error en updateRol: " . $e->getMessage());
+
+        } finally {
+            $db = null;
+        }
+
+        return $toret;
+    }
+
 }
