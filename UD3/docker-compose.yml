@@ -1,0 +1,33 @@
+services:
+  php:
+    image: bitnami/php-fpm:latest
+    ports:
+      - 9000:9000
+    volumes:
+      - .:/app
+      - ./configuracion_php.ini:/opt/bitnami/php/etc/conf.d/configuracion_php.ini
+  apache:
+    image: bitnami/apache:latest
+    ports:
+      - 80:8080
+    volumes:
+      - ./apache-vhost/myapp.conf:/vhosts/myapp.conf:ro
+      - .:/app
+    depends_on:
+      - php
+  mariadb:
+    image: docker.io/bitnami/mariadb:10.6
+    environment:
+      - MARIADB_ROOT_PASSWORD=bitnami
+    volumes:
+      - 'mariadb_data:/bitnami'
+  phpmyadmin:
+    image: docker.io/bitnami/phpmyadmin:5
+    ports:
+      - '8000:8080'
+    depends_on:
+      - mariadb
+
+volumes:
+  mariadb_data:
+    driver: local
