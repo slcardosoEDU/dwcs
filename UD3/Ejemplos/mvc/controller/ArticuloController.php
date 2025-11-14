@@ -1,13 +1,13 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT']."/Ejemplos/mvc/model/ArticuloModel.php";
+require_once MODEL_PATH."ArticuloModel.php";
 class ArticuloController{
 
     public function listarArticulos(){
         $data = ArticuloModel::getArticulos();
         if(isset($data)){
-            include_once $_SERVER['DOCUMENT_ROOT']."/Ejemplos/mvc/view/lista_productos-view.php";
+            include_once VIEW_PATH."lista_productos-view.php";
         }else{
-            include_once $_SERVER['DOCUMENT_ROOT']."/Ejemplos/mvc/view/error_lista-view.html";
+            include_once VIEW_PATH."error_lista-view.html";
         }
     }
 }
