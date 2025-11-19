@@ -1,5 +1,5 @@
 <?php
-
+namespace Ejemplos\mvc\Model;
 class ArticuloModel
 {
 

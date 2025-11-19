@@ -1,5 +1,5 @@
 <?php
-
+namespace Ejemplos\mvc\Controller;
 class ErrorController{
     public function pageNotFound(){
         include_once VIEW_PATH."page_not_found-view.html";

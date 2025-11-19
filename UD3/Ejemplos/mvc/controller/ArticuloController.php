@@ -1,5 +1,6 @@
 <?php
-require_once MODEL_PATH."ArticuloModel.php";
+namespace Ejemplos\mvc\Controller;
+use Ejemplos\mvc\Model\ArticuloModel;
 class ArticuloController{
 
     public function listarArticulos(){
