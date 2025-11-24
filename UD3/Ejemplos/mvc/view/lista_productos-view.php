@@ -18,8 +18,8 @@
         // Recorremos fila a fila el resultado de la consulta
         foreach ($data as $row) {
             echo "<tr>";
-            echo "<td> " . $row['fecha'] . " </td>";
-            echo "<td> " . $row['titulo'] . " </td>";
+            echo "<td> " . $row->getFechaFormateada() . " </td>";
+            echo "<td> " . $row->titulo . " </td>";
             echo "</tr>";
         }
         echo "</table>";

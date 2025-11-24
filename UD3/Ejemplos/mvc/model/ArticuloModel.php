@@ -1,13 +1,26 @@
 <?php
-namespace Ejemplos\mvc\Model;
-class ArticuloModel
+namespace Ejemplos\mvc\model;
+use DateTimeImmutable;
+use PDOException;
+
+class Articulo{
+    public int $codArticulo;
+    public string $titulo;
+    private DateTimeImmutable $fecha;
+
+    public function setFecha(string $fecha){
+        $this->fecha = new DateTimeImmutable($fecha);
+    }
+
+    public function getFechaFormateada(){
+        return $this->fecha->format('d/m/y');
+    }
+}
+
+class ArticuloModel extends Model
 {
 
-    private static function getConnection()
-    {
-        $db = new PDO('mysql:host=mariadb; dbname=articulos', 'root', 'bitnami');
-        return $db;
-    }
+   
 
     /**
      * Devuelve un array con todos los articulos. Cada articulo es un array asociativo con las
@@ -18,10 +31,14 @@ class ArticuloModel
     {
         try {
             $db = self::getConnection();
-        $res = $db->query('SELECT fecha, titulo FROM articulo');
+        $res = $db->query('SELECT fecha, titulo, cod_articulo FROM articulo');
         $arr = [];
         while ($row = $res->fetch()) {
-            $arr[] = $row;
+            $art = new Articulo();
+            $art->codArticulo = $row['cod_articulo'];
+            $art->setFecha($row['fecha']);
+            $art->titulo = $row['titulo'];
+            $arr[] = $art;
         }
         $res->closeCursor();
         } catch (PDOException $th) {
@@ -33,5 +50,31 @@ class ArticuloModel
         
 
         return $arr;
+    }
+
+
+    public static function getArticulo(int $codArticulo):array|null
+    {
+        $art = null;
+        try {
+            $db = self::getConnection();
+        $statement = $db->prepare('SELECT fecha, titulo, cod_articulo FROM articulo WHERE cod_articulo=?');
+        $statement->bindValue(1, $codArticulo, PDO::PARAM_INT);
+        $statement->execute();
+        $art = $statement->fetch();
+        if(!$art){
+            $art = null;
+        }
+        
+        $statement->closeCursor();
+        } catch (PDOException $th) {
+            error_log($th->getMessage());
+            $arr = null;
+        }finally{
+            $db = null;
+        }
+        
+
+        return $art;
     }
 }

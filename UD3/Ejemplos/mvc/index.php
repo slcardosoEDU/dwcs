@@ -10,7 +10,7 @@ require_once "globals.php";
  */
 spl_autoload_register(function ($clase) {
 
-    $ruta = __DIR__ . '/' . str_replace('\\', '/', $clase) . '.php';
+    $ruta = $_SERVER['DOCUMENT_ROOT'].'/'.str_replace('\\', '/', $clase) . '.php';
     if (file_exists($ruta)) {
         require_once $ruta;
     } else {
@@ -20,7 +20,7 @@ spl_autoload_register(function ($clase) {
 
 $controller = $_REQUEST['controller'] ?? "ErrorController";
 try {
-    $controller = "Ejemplos\mvc\\Controller\\$controller";
+    $controller = "Ejemplos\\mvc\\controller\\$controller";
     $objeto = new $controller();
     $action = $_REQUEST['action'] ?? 'pageNotFound';
 } catch (\Throwable $th) {

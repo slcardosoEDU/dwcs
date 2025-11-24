@@ -1,6 +1,6 @@
 <?php
-namespace Ejemplos\mvc\Controller;
-use Ejemplos\mvc\Model\ArticuloModel;
+namespace Ejemplos\mvc\controller;
+use Ejemplos\mvc\model\ArticuloModel;
 class ArticuloController{
 
     public function listarArticulos(){
