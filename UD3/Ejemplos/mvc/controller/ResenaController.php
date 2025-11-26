@@ -1,21 +1,12 @@
 <?php
 namespace Ejemplos\mvc\controller;
-use ArticuloModel;
 use Ejemplos\mvc\model\ResenaModel;
 use Ejemplos\mvc\model\Resena;
 use Exception;
-class ResenaController
+class ResenaController extends Controller
 {
 
-    public function nuevaResena(){
-        $codArticulo = $_REQUEST['cod_articulo']??null;
-        if(!isset($codArticulo)){
-            $error = new ErrorController();
-            $error->pageNotFound();
-        }
-
-        $articulo = ArticuloModel::getArticulo($codArticulo);
-    }
+    
 
     public function addResena()
     {
@@ -28,16 +19,13 @@ class ResenaController
             if(!ResenaModel::addResena($resena)){
                 throw new Exception("Error agregando resena: ");
             }
-            $this->listarResenasArticulo();
+            $articulo = new ArticuloController();
+            $articulo->listarResenas();
             
         } catch (\Throwable $th) {
             error_log($th->getMessage());
-            include_once VIEW_PATH."error_add_resena-view.html";
+            $this->vista->showView('error_add_resena');
         }
     }
 
-    public function listarResenasArticulo(?int $codArticulo = null)
-    {
-
-    }
 }

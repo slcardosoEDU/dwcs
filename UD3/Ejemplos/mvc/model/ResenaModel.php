@@ -1,31 +1,9 @@
 <?php
 namespace Ejemplos\mvc\model;
 
-use DateTimeImmutable;
 use PDOException;
 use Pdo;
-class Resena
-{
-    public int $codResena;
-    public int $codArticulo;
-    public string $descripcion;
-    private DateTimeImmutable $fechaHora;
 
-    public function setFechaHora(string $fechaHora)
-    {
-        $this->fechaHora = new DateTimeImmutable($fechaHora);
-    }
-
-    public function getFechaHora(){
-        return $this->fechaHora;
-    }
-
-    public function getFechaFormateada()
-    {
-        return $this->fechaHora->format('d/m/y H:i');
-    }
-
-}
 
 class ResenaModel extends Model
 {
@@ -40,7 +18,7 @@ class ResenaModel extends Model
             $statement = $db->prepare($sql);
             $statement->bindValue('cod_articulo',$resena->codArticulo, PDO::PARAM_INT);
             $statement->bindValue('descripcion',$resena->descripcion, PDO::PARAM_STR);
-            $statement->bindValue('fecha_hora',$resena->getFechaHora());
+            $statement->bindValue('fecha_hora',$resena->getFechaFormateada());
             $resultado = $statement->execute();            
         } catch (PDOException $th) {
             error_log($th->getMessage());

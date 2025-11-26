@@ -1,8 +1,8 @@
 <?php
 namespace Ejemplos\mvc\controller;
-class ErrorController{
+class ErrorController extends Controller{
     public function pageNotFound(){
-        include_once VIEW_PATH."page_not_found-view.html";
+        $this->vista->showView("page_not_found");
         header("HTTP/1.1 404 Page not found");
         exit;
     }

@@ -19,7 +19,7 @@
         foreach ($data as $row) {
             echo "<tr>";
             echo "<td> " . $row->getFechaFormateada() . " </td>";
-            echo "<td> " . $row->titulo . " </td>";
+            echo "<td> <a href='?controller=ArticuloController&action=listarResenas&cod_articulo=".$row->codArticulo."'>" . $row->titulo . "</a> </td>";
             echo "</tr>";
         }
         echo "</table>";

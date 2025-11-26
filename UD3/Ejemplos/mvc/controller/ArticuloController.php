@@ -1,14 +1,36 @@
 <?php
 namespace Ejemplos\mvc\controller;
 use Ejemplos\mvc\model\ArticuloModel;
-class ArticuloController{
+use Ejemplos\mvc\model\ResenaModel;
+
+class ArticuloController extends Controller{
+
+    
 
     public function listarArticulos(){
-        $data = ArticuloModel::getArticulos();
-        if(isset($data)){
-            include_once VIEW_PATH."lista_productos-view.php";
+        $articulosTodos = ArticuloModel::getArticulos();
+        if(isset($articulosTodos)){
+            $this->vista->showView("lista_productos", $articulosTodos);            
         }else{
-            include_once VIEW_PATH."error_lista-view.html";
+            $this->vista->showView("error_lista");
+        }
+    }
+
+    public function listarResenas(){
+        $codArticulo = $_REQUEST['cod_articulo']??null;
+        if(!isset($codArticulo)){
+            $error = new ErrorController();
+            $error->pageNotFound();
+        }
+
+        $articulo = ArticuloModel::getArticulo($codArticulo);
+        if(isset($articulo)){
+            $resenas = ResenaModel::getResenasArticulo($codArticulo);
+            $datos = ['articulo'=>$articulo, 'resenas'=>$resenas];
+            $this->vista->showView("listar_resenas", $datos);   
+        }else{
+            $error = new ErrorController();
+            $error->pageNotFound();
         }
     }
 }
