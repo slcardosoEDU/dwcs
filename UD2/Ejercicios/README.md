@@ -44,3 +44,6 @@ Implementa cookies para recordar al usuario:
 Guarda una cookie con un identificador único del carrito de compras que dure 2 días.
 Si el usuario vuelve a la página antes de que la cookie expire, la sesión debe restablecerse con los productos previamente agregados.
 Asegúrate de que el carrito se reinicie correctamente si la cookie o la sesión expiran.
+
+## [Actividad 2.4](2_4)
+Implementa una aplicación completa (BD, vistas y lógica de negocio) que respete las especificaciones del publicado en el aula virtual.

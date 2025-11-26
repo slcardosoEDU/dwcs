@@ -62,16 +62,20 @@
 
 
 ### [Ejercicios](UD2/Ejercicios)
-* [2. Juego del número secreto](UD2/Ejercicios/2_2/)
+* [Actividad 2.2: Juego del número secreto](UD2/Ejercicios/2_2/)
+* [Actividad 2.3: Cookies y sesiones](UD2/Ejercicios/2_3/)
+* [Actividad 2.4: Control de acceso](UD2/Ejercicios/2_4/)
 
 # [Unidad 3](UD3)
  > **MVC**
  
 ### [Ejemplos](UD3/Ejemplos)
-
+* [Código monolítico](UD3/Ejemplos/monolitico/index.php)
+* [Primera separación: vistas separadas de modelos](UD3/Ejemplos/mv/)
+* [MVC completo](UD3/Ejemplos/mvc/)
 
 ### [Ejercicios](UD3/Ejercicios)
-
+* [3.1 Escuelas Infantiles](UD3/Ejercicios/escuelas)
 
 # [Unidad 4](UD4)
  > **SERVICIOS WEB**
