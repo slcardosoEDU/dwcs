@@ -1,7 +1,7 @@
 <?php
-namespace Ejercicios\escuelas\model\Vo;
+namespace Ejercicios\escuelas\model\vo;
 
-class ProvinciaVO
+class ProvinciaVO implements Vo
 {
     private ?int $codProvincia;
     private string $nombre;

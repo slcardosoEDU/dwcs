@@ -1,8 +1,8 @@
 <?php
 
-namespace Ejercicios\escuelas\model\Vo;
+namespace Ejercicios\escuelas\model\vo;
 
-abstract class Vo{
-    protected int $id;
+interface Vo{
+    
 
 }

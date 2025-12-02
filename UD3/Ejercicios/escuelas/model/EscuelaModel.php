@@ -2,8 +2,8 @@
 namespace Ejercicios\escuelas\model;
 
 use PDO;
-use Ejercicios\escuelas\model\Vo\Vo;
-use Ejercicios\escuelas\model\Vo\EscuelaVO;
+use Ejercicios\escuelas\model\vo\Vo;
+use Ejercicios\escuelas\model\vo\EscuelaVO;
 use PDOException;
 
 class EscuelaModel extends Model
@@ -31,7 +31,7 @@ class EscuelaModel extends Model
             $db = null;
         }
 
-        return isset($row) ? self::rowToVO($row) : null;
+        return isset($row) && $row ? self::rowToVO($row) : null;
     }
 
     /**
@@ -114,7 +114,7 @@ class EscuelaModel extends Model
             $stmt->bindValue(":hora_cierre", self::formatoHora($escuela->getHoraCierre()));
             $stmt->bindValue(":comedor", $escuela->getComedor() ? 'S' : 'N');
 
-            if ($stmt->execute()) {
+            if ($stmt->execute() && $stmt->rowCount()==1) {
                 $id = (int) $db->lastInsertId();
             }
 
