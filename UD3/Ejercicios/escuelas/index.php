@@ -13,7 +13,7 @@ spl_autoload_register(function ($clase) {
 
 $controller = $_REQUEST['controller'] ?? "ErrorController";
 try {
-    $controller = "Ejemplos\\mvc\\controller\\$controller";
+    $controller = "Ejercicios\\escuelas\\controller\\$controller";
     $objeto = new $controller();
     $action = $_REQUEST['action'] ?? 'pageNotFound';
 } catch (\Throwable $th) {
@@ -24,6 +24,6 @@ try {
 try {
     $objeto->$action();
 } catch (\Throwable $th) {
-    $objeto = new Ejemplos\mvc\Controller\ErrorController();
+    $objeto = new Ejercicios\escuelas\controller\ErrorController();
     $objeto->pageNotFound();
 }

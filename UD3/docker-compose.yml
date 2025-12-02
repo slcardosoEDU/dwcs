@@ -16,13 +16,13 @@ services:
     depends_on:
       - php
   mariadb:
-    image: docker.io/bitnami/mariadb:10.6
+    image: docker.io/bitnami/mariadb:latest
     environment:
       - MARIADB_ROOT_PASSWORD=bitnami
     volumes:
       - 'mariadb_data:/bitnami'
   phpmyadmin:
-    image: docker.io/bitnami/phpmyadmin:5
+    image: docker.io/bitnami/phpmyadmin:latest
     ports:
       - '8000:8080'
     depends_on:

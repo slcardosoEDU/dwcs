@@ -3,7 +3,7 @@ namespace Ejercicios\escuelas\model;
 
 use PDO;
 use PDOException;
-use Ejercicios\escuelas\model\Vo\MunicipioVO;
+use Ejercicios\escuelas\model\vo\MunicipioVO;
 
 class MunicipioModel extends Model
 {

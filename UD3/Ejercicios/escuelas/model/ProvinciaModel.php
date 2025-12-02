@@ -4,7 +4,7 @@ namespace Ejercicios\escuelas\model;
 use Exception;
 use PDO;
 use PDOException;
-use Ejercicios\escuelas\model\Vo\ProvinciaVO;
+use Ejercicios\escuelas\model\vo\ProvinciaVO;
 
 class ProvinciaModel extends Model
 {

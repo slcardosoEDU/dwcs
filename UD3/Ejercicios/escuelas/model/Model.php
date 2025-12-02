@@ -11,7 +11,9 @@ abstract class Model
         return $db;
     }
 
-   
+   //NOTA: Problema de contravarianza en el tipo de parámetro. En la herencia de PHP los parámetros tienen que ser de un
+   //       tipo igual o más genérico que el del padre. Principio de sustitución de Liskov: Si algo acepta un Model debería
+   //       aceptar cualquier Vo. 
 
     // /**
     //  * Devuelve un unico objeto de la base de datos correspondiente al id pasado.
