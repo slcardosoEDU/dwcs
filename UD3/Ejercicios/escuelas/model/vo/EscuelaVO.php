@@ -1,7 +1,7 @@
 <?php
 namespace Ejercicios\escuelas\model\vo;
 use DateTime;
-class EscuelaVO implements Vo{
+class EscuelaVO {
     private ?int $codEscuela;
     private ?string $nombre;
     private ?string $direccion;

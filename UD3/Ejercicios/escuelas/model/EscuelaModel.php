@@ -59,7 +59,6 @@ class EscuelaModel extends Model
                     $sql .= " AND comedor = :comedor";
                 }
             }
-            $sql .= " ORDER BY cod_municipio, nombre";
 
             $stmt = $db->prepare($sql);
             if (isset($data)) {

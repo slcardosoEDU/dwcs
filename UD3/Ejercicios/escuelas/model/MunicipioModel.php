@@ -32,7 +32,7 @@ class MunicipioModel extends Model
     /**
      * Devuelve municipios filtrados por nombre y/o provincia.
      */
-    public static function getFilter(?array $data): array
+    public static function getFilter(?array $data=null): array
     {
         $sql = "SELECT * FROM municipio WHERE 1=1";
         $resultados = [];

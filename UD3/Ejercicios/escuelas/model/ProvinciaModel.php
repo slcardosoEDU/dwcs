@@ -36,7 +36,7 @@ class ProvinciaModel extends Model
      * Devuelve un array filtrado de provincias.
      * Filtros: nombre (string)
      */
-    public static function getFilter(?array $data): array
+    public static function getFilter(?array $data = null): array
     {
         $sql = "SELECT * FROM provincia WHERE 1=1";
         $resultados = [];

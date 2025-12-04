@@ -1,33 +1,24 @@
 <?php
 namespace Ejercicios\escuelas\controller;
-use Ejercicios\escuelas\model\MunicipioModel;
 
+use Ejercicios\escuelas\model\MunicipioModel;
 class MunicipioController extends Controller
 {
+    function getMunicipiosProvinciaJSON(){
+        $filterProvincia = isset($_REQUEST['cod_provincia']) ? ['cod_provincia'=>(int) $_REQUEST['cod_provincia']]:null;
 
-    public static function getMunicipiosProvinciaJSON(): void
-    {
-        $codProvincia = isset($_REQUEST['cod_provincia']) ? (int) $_REQUEST['cod_provincia'] : '';
+        $municipios = MunicipioModel::getFilter($filterProvincia);
 
-        if ($codProvincia === null) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Falta el parámetro cod_provincia']);
-            return;
-        }
-        $filtro = !empty($codProvincia)?['cod_provincia' => $codProvincia]:null;
-        $municipiosVO = MunicipioModel::getFilter($filtro );
-
-        // Construimos un array simple para json_encode
         $jsonArray = [];
-        foreach ($municipiosVO as $m) {
+        foreach($municipios as $m){
             $jsonArray[] = [
                 'cod_municipio' => $m->getCodMunicipio(),
                 'nombre' => $m->getNombre()
             ];
         }
 
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode($jsonArray, JSON_UNESCAPED_UNICODE);
+        $json = json_encode($jsonArray, JSON_UNESCAPED_UNICODE);
+        header('Content-Type: aplication/json; charset=utf-8');
+        echo $json;
     }
-
 }

@@ -3,7 +3,7 @@ require_once "globals.php";
 
 spl_autoload_register(function ($clase) {
 
-    $ruta = $_SERVER['DOCUMENT_ROOT'].'/'.str_replace('\\', '/', $clase) . '.php';
+    $ruta = $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', '/', $clase) . '.php';
     if (file_exists($ruta)) {
         require_once $ruta;
     } else {
@@ -17,7 +17,7 @@ try {
     $objeto = new $controller();
     $action = $_REQUEST['action'] ?? 'pageNotFound';
 } catch (\Throwable $th) {
-    $objeto = new Ejemplos\mvc\Controller\ErrorController();
+    $objeto = new Ejercicios\escuelas\controller\ErrorController();
     $action = "pageNotFound";
 }
 

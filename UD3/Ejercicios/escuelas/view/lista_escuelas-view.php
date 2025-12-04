@@ -66,26 +66,25 @@ $provincias = $data['provincias'] ?? [];
             <legend>Filtros</legend>
 
             <label for="f_nombre">Nombre:</label>
-            <input type="text" name="nombre" id="f_nombre" value="<?=isset($_REQUEST['nombre'])?$_REQUEST['nombre']:'' ?>">
+            <input type="text" name="nombre" id="f_nombre" value="<?= isset($_POST['nombre']) ? $_POST['nombre'] : '' ?>">
+
             <label for="f_provincia">Provincia:</label>
             <select name="cod_provincia" id="f_provincia">
-                <option value="">-- Todas --</option>
-                <?php foreach ($provincias as $p): ?>
-                    <option value="<?= $p->getCodProvincia(); ?>"
-                        <?= (isset($_REQUEST['cod_provincia']) && $_REQUEST['cod_provincia'] == $p->getCodProvincia()) ? 'selected' : '' ?>>
+                <option value="">-- Todos --</option>
 
-                        <?= htmlspecialchars($p->getNombre()); ?>
+                <?php foreach ($provincias as $m): ?>
+                    <option value="<?= $m->getCodProvincia(); ?>" <?= isset($_POST['cod_provincia']) && $_POST['cod_provincia'] == $m->getCodProvincia() ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($m->getNombre()); ?>
                     </option>
                 <?php endforeach; ?>
             </select>
+
             <label for="f_municipio">Municipio:</label>
             <select name="cod_municipio" id="f_municipio">
                 <option value="">-- Todos --</option>
 
                 <?php foreach ($municipios as $m): ?>
-                    <option value="<?= $m->getCodMunicipio(); ?>"
-                        <?= (isset($_REQUEST['cod_municipio']) && $_REQUEST['cod_municipio'] == $m->getCodMunicipio()) ? 'selected' : '' ?>>
-
+                    <option value="<?= $m->getCodMunicipio(); ?>" <?= isset($_POST['cod_municipio']) && $_POST['cod_municipio'] == $m->getCodMunicipio() ? 'selected' : '' ?>>
                         <?= htmlspecialchars($m->getNombre()); ?>
                     </option>
                 <?php endforeach; ?>
@@ -144,24 +143,20 @@ $provincias = $data['provincias'] ?? [];
             <?php endif; ?>
         </tbody>
     </table>
-
     <!-- ==============================
      SCRIPT AJAX
 ================================= -->
     <script>
+
         document.addEventListener('DOMContentLoaded', function () {
             const provinciaSelect = document.getElementById('f_provincia');
             const municipioSelect = document.getElementById('f_municipio');
 
             provinciaSelect.addEventListener('change', function () {
                 const codProvincia = this.value;
-
-                // Limpiar municipios
                 municipioSelect.innerHTML = '<option value="">-- Todos --</option>';
 
-
-
-                // Petición AJAX
+                //Peticion AJAX
                 fetch(`?controller=MunicipioController&action=getMunicipiosProvinciaJSON&cod_provincia=${codProvincia}`)
                     .then(response => response.json())
                     .then(data => {
@@ -170,9 +165,10 @@ $provincias = $data['provincias'] ?? [];
                             option.value = m.cod_municipio;
                             option.textContent = m.nombre;
                             municipioSelect.appendChild(option);
+
                         });
                     })
-                    .catch(err => console.error("Error cargando municipios: ", err));
+                    .catch(err => console.error("Error cargando municipios", err));
             });
         });
     </script>
