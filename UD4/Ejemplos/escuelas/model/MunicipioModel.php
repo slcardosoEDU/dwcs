@@ -26,7 +26,7 @@ class MunicipioModel extends Model
             $db = null;
         }
 
-        return isset($row) ? self::rowToVO($row) : null;
+        return $row ? self::rowToVO($row) : null;
     }
 
     /**
@@ -123,7 +123,9 @@ class MunicipioModel extends Model
             $db = self::getConnection();
             $stmt = $db->prepare($sql);
             $stmt->bindValue(":id", $id, PDO::PARAM_INT);
-            $result = $stmt->execute();
+            if($stmt->execute()){
+                $result = $stmt->rowCount() === 1;
+            }
         } catch (PDOException $th) {
             error_log("Error eliminando municipio $id: " . $th->getMessage());
         } finally {

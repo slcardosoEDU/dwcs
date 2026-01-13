@@ -102,4 +102,13 @@ class MunicipioVO implements Vo
             $data['codProvincia']
         );
     }
+
+    public  function updateVoParams(Vo $vo){
+        $this->nombre = $vo->getNombre() ?? $this->nombre;
+        $this->latitud = $vo->getLatitud() ?? $this->latitud;
+        $this->longitud = $vo->getLongitud() ?? $this->longitud;
+        $this->altitud = $vo->getAltitud() ?? $this->altitud;
+        $this->codProvincia = $vo->getCodProvincia() ?? $this->codProvincia;
+
+    }
 }

@@ -19,7 +19,7 @@ $endpoints = [
     ['method' => 'GET', 'uri' => '/municipios', 'handler' => [MunicipioController::class, 'index']],
     ['method' => 'GET', 'uri' => '/municipios/{id}', 'handler' => [MunicipioController::class, 'show']],
     ['method' => 'DELETE', 'uri' => '/municipios/{id}', 'handler' => [MunicipioController::class, 'destroy']],
-    ['method' => 'UPDATE', 'uri' => '/municipios/{id}', 'handler' => [MunicipioController::class, 'update']],
+    ['method' => 'PUT', 'uri' => '/municipios/{id}', 'handler' => [MunicipioController::class, 'update']],
     ['method' => 'POST', 'uri' => '/municipios', 'handler' => [MunicipioController::class, 'store']],
 
 ];
@@ -40,13 +40,14 @@ foreach ($endpoints as $route) {
         //  $patern = '#^/municipios$#'
         // Para /municipios/{id}/calles/4
         //  $patern = '#^/municipios/([\w]+)/calles/([\w]+)$#'
-        
+
         // Compruebo si la uri encaja
         if (preg_match($patern, $request->uri(), $matches)) {
             unset($matches[0]);
             // Llamar al método del controlador adecuado
             $controller = new $route['handler'][0]();
             call_user_func_array([$controller, $route['handler'][1]], $matches);
+            exit;
         }
 
     }
