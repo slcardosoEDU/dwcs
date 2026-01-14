@@ -4,6 +4,8 @@ namespace Ejemplos\escuelas\controller;
 use Ejemplos\escuelas\core\Request;
 use Ejemplos\escuelas\model\MunicipioModel;
 use Ejemplos\escuelas\model\vo\MunicipioVO;
+use Ejemplos\escuelas\core\Response;
+
 class MunicipioController{
 
     public function index(){
@@ -14,23 +16,17 @@ class MunicipioController{
             $json[] = $municipio->toArray();
         }
         //Devolver los municipios en formato json (HTTP RESPONSE).
-        http_response_code(200);
-        echo json_encode($json);
+        Response::json($json, 200);
     }
 
     public function show(int $id){
         //Obtener todos los municipios
         $municipio = MunicipioModel::getById($id);
         if(!isset($municipio)){
-            http_response_code(404);
-            echo json_encode(['error' => 'Recurso no encontrado.']);
+            Response::notFound();
             return;
         }
-
-        $json= $municipio->toArray();
-        //Devolver los municipios en formato json (HTTP RESPONSE).
-        http_response_code(200);
-        echo json_encode($json);
+        Response::json($municipio->toArray(), 200);
     }
 
     public function store(){
@@ -39,9 +35,7 @@ class MunicipioController{
         $municipio = MunicipioVO::fromArray($request->body());
         $municipio = MunicipioModel::add($municipio);
         //Devolver los municipios en formato json (HTTP RESPONSE).
-        $json = $municipio->toArray();
-        http_response_code(201);
-        echo json_encode($json);
+        Response::json($municipio->toArray(), 201);
     }
 
     public function update(int $id){
@@ -49,8 +43,7 @@ class MunicipioController{
         $request = new Request();
         $municipio = MunicipioModel::getById($id);
         if(!isset($municipio)){
-            http_response_code(404);
-            echo json_encode(['error' => 'Recurso no encontrado.']);
+            Response::notFound();
             return;
         }
         $municipio->updateVoParams(MunicipioVO::fromArray($request->body()));
@@ -58,19 +51,15 @@ class MunicipioController{
         $municipio->setCodMunicipio($id);
         $municipio = MunicipioModel::update($municipio);
         //Devolver los municipios en formato json (HTTP RESPONSE).
-        $json = $municipio->toArray();
-        http_response_code(200);
-        echo json_encode($json);
+        Response::json($municipio->toArray(),200);
     }
 
     public function destroy(int $id){
        
         if(MunicipioModel::delete($id)) {
-            http_response_code(204);
-            echo json_encode(['mensaje'=> "Municipio $id eliminado."]);
+            Response::json(['mensaje'=> "Municipio $id eliminado."],200);
         }else{
-            http_response_code(401);
-            echo json_encode(['error'=> "Municipio con id = $id no existe."]);
+            Response::notFound();
         }            
         
        
