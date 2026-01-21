@@ -2,26 +2,24 @@
 
 namespace Ejercicios\ejercicio4_1\model;
 
-use Ejercicios\ejercicio4_1\model\vo\BandaVo;
+use Ejercicios\ejercicio4_1\model\vo\DiscoVo;
 use PDO;
 use PDOException;
 
-class BandaModel extends Model
+class DiscoModel extends Model
 {
-    public static function add(BandaVo $vo): ?BandaVo
+    public static function add(DiscoVo $vo): ?DiscoVo
     {
-        $sql = "INSERT INTO banda (nombre, num_integrantes, genero, nacionalidad)
-                VALUES (:nombre, :num_integrantes, :genero, :nacionalidad)";
+        $sql = "INSERT INTO disco (titulo, anho, id_banda)
+                VALUES (:titulo, :anho, :id_banda)";
         try {
             $db = self::getConnection();
-
-
             $stm = $db->prepare($sql);
             $stm->execute($vo->toArray());
-            $banda_id = (int) $db->lastInsertId();
-            $vo->setId($banda_id);
+            $disco_id = (int)$db->lastInsertId();
+            $vo->setId($disco_id);
         } catch (PDOException $th) {
-            error_log("Error agregando banda: " . $th->getMessage());
+            error_log("Error agregando disco: " . $th->getMessage());
             $vo = null;
         } finally {
             $db = null;
@@ -30,46 +28,47 @@ class BandaModel extends Model
         return $vo;
     }
 
-    public static function get(int $id): ?BandaVo
+    public static function get(int $id): ?DiscoVo
     {
-        $sql = "SELECT * FROM banda WHERE id = :id";
-        $bandaVo = null;
+        $sql = "SELECT * FROM disco WHERE id = :id";
+        $discoVo = null;
         try {
             $db = self::getConnection();
             $stm = $db->prepare($sql);
             $stm->execute(['id' => $id]);
             $data = $stm->fetch();
-            $bandaVo = $data ? BandaVo::fromArray($data) : null;
+            $discoVo = $data ? DiscoVo::fromArray($data) : null;
         } catch (PDOException $th) {
-            error_log("Error obteniendo banda banda_id = $id: " . $th->getMessage());
+            error_log("Error obteniendo disco id = $id: " . $th->getMessage());
         } finally {
             $db = null;
         }
 
-        return $bandaVo;
+        return $discoVo;
     }
 
     public static function getFilter(
-        ?string $nombre = null,
-        ?string $genero = null,
-        ?string $nacionalidad = null
+        ?string $titulo = null,
+        ?int $anho = null,
+        ?int $idBanda = null
     ): array {
-        $bandas = [];
-        $sql = "SELECT * FROM banda WHERE 1=1";
+        $discos = [];
+        $sql = "SELECT * FROM disco WHERE 1=1";
         $params = [];
 
-        if ($nombre !== null) {
-            $sql .= " AND nombre LIKE :nombre";
-            $params['nombre'] = "%$nombre%";
+        if ($titulo !== null) {
+            $sql .= " AND titulo LIKE :titulo";
+            $params['titulo'] = "%$titulo%";
         }
-        if ($genero !== null) {
-            $sql .= " AND genero = :genero";
-            $params['genero'] = $genero;
+        if ($anho !== null) {
+            $sql .= " AND anho = :anho";
+            $params['anho'] = $anho;
         }
-        if ($nacionalidad !== null) {
-            $sql .= " AND nacionalidad = :nacionalidad";
-            $params['nacionalidad'] = $nacionalidad;
+        if ($idBanda !== null) {
+            $sql .= " AND id_banda = :id_banda";
+            $params['id_banda'] = $idBanda;
         }
+
         try {
             $db = self::getConnection();
             $stm = $db->prepare($sql);
@@ -78,25 +77,24 @@ class BandaModel extends Model
             }
             $stm->execute();
             foreach ($stm as $row) {
-                $bandas[] = BandaVo::fromArray($row);
+                $discos[] = DiscoVo::fromArray($row);
             }
         } catch (PDOException $th) {
-            error_log("Error obteniendo bandas " . $th->getMessage());
+            error_log("Error obteniendo discos: " . $th->getMessage());
         } finally {
             $db = null;
         }
 
-        return $bandas;
+        return $discos;
     }
 
-    public static function update(BandaVo $vo): bool
+    public static function update(DiscoVo $vo): bool
     {
         $resultado = false;
-        $sql = "UPDATE banda
-                SET nombre = :nombre,
-                    num_integrantes = :num_integrantes,
-                    genero = :genero,
-                    nacionalidad = :nacionalidad
+        $sql = "UPDATE disco
+                SET titulo = :titulo,
+                    anho = :anho,
+                    id_banda = :id_banda
                 WHERE id = :id";
         try {
             $db = self::getConnection();
@@ -108,7 +106,7 @@ class BandaModel extends Model
             $resultado = $stm->execute();
             $resultado = $resultado && $stm->rowCount() == 1;
         } catch (PDOException $th) {
-            error_log("Error actualizando banda: " . $th->getMessage());
+            error_log("Error actualizando disco: " . $th->getMessage());
         } finally {
             $db = null;
         }
@@ -118,17 +116,16 @@ class BandaModel extends Model
 
     public static function delete(int $id): bool
     {
-
         $resultado = false;
-        $sql = "DELETE FROM banda WHERE id = :id";
+        $sql = "DELETE FROM disco WHERE id = :id";
         try {
             $db = self::getConnection();
             $stm = $db->prepare($sql);
-            $stm->bindValue("id", $id);    
+            $stm->bindValue("id", $id);
             $resultado = $stm->execute();
             $resultado = $resultado && $stm->rowCount() == 1;
         } catch (PDOException $th) {
-            error_log("Error actualizando banda: " . $th->getMessage());
+            error_log("Error eliminando disco: " . $th->getMessage());
         } finally {
             $db = null;
         }
