@@ -39,7 +39,7 @@ class EscuelaModel extends Model
      * nombre (string), cod_municipio (int) y/o comedor (bool).
      * @param $data Filtros a aplicar.
      */
-    public static function getFilter(?array $data): array
+    public static function getFilter(?array $data=null): array
     {
         $sql = "SELECT * FROM escuela WHERE 1=1";
         $resultados = [];
