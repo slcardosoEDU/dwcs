@@ -5,16 +5,16 @@ namespace Ejercicios\ejercicio4_1\model\vo;
 class BandaVo implements Vo
 {
     private ?int $id;
-    private string $nombre;
-    private int $numIntegrantes;
-    private string $genero;
+    private ?string $nombre;
+    private ?int $numIntegrantes;
+    private ?string $genero;
     private ?string $nacionalidad;
 
     public function __construct(
         ?int $id,
-        string $nombre,
-        int $numIntegrantes,
-        string $genero,
+        ?string $nombre,
+        ?int $numIntegrantes,
+        ?string $genero,
         ?string $nacionalidad
     ) {
         $this->id = $id;
@@ -28,13 +28,13 @@ class BandaVo implements Vo
     public function getId(): ?int { return $this->id; }
     public function setId(?int $id): void { $this->id = $id; }
 
-    public function getNombre(): string { return $this->nombre; }
+    public function getNombre(): ?string { return $this->nombre; }
     public function setNombre(string $nombre): void { $this->nombre = $nombre; }
 
-    public function getNumIntegrantes(): int { return $this->numIntegrantes; }
+    public function getNumIntegrantes(): ?int { return $this->numIntegrantes; }
     public function setNumIntegrantes(int $numIntegrantes): void { $this->numIntegrantes = $numIntegrantes; }
 
-    public function getGenero(): string { return $this->genero; }
+    public function getGenero(): ?string { return $this->genero; }
     public function setGenero(string $genero): void { $this->genero = $genero; }
 
     public function getNacionalidad(): ?string { return $this->nacionalidad; }
@@ -55,9 +55,9 @@ class BandaVo implements Vo
     {
         return new BandaVo(
             $data['id'] ?? null,
-            $data['nombre'],
-            (int)$data['num_integrantes'],
-            $data['genero'],
+            $data['nombre'] ?? null,
+            $data['num_integrantes']??null,
+            $data['genero']??null,
             $data['nacionalidad'] ?? null
         );
     }
@@ -68,9 +68,9 @@ class BandaVo implements Vo
             return;
         }
 
-        $this->nombre = $vo->nombre;
-        $this->numIntegrantes = $vo->numIntegrantes;
-        $this->genero = $vo->genero;
-        $this->nacionalidad = $vo->nacionalidad;
+        $this->nombre = $vo->getNombre()??$this->nombre;
+        $this->numIntegrantes = $vo->getNumIntegrantes()??$this->numIntegrantes;
+        $this->genero = $vo->getGenero()??$this->genero;
+        $this->nacionalidad = $vo->getNacionalidad()??$this->nacionalidad;
     }
 }

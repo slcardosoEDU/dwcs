@@ -60,8 +60,8 @@ class DiscoVo implements Vo
             return;
         }
 
-        $this->titulo = $vo->titulo;
-        $this->anho = $vo->anho;
-        $this->idBanda = $vo->idBanda;
+        $this->titulo = $vo->getTitulo()??$this->titulo;
+        $this->anho = $vo->getAnho()??$this->anho;
+        $this->idBanda = $vo->getIdBanda()??$this->idBanda;
     }
 }

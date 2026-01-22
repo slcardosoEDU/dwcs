@@ -17,7 +17,9 @@ class BandaModel extends Model
 
 
             $stm = $db->prepare($sql);
-            $stm->execute($vo->toArray());
+            $params = $vo->toArray();
+            unset($params['id']);
+            $stm->execute($params);
             $banda_id = (int) $db->lastInsertId();
             $vo->setId($banda_id);
         } catch (PDOException $th) {
@@ -37,6 +39,7 @@ class BandaModel extends Model
         try {
             $db = self::getConnection();
             $stm = $db->prepare($sql);
+            //$stm->bindValue('id',$id);
             $stm->execute(['id' => $id]);
             $data = $stm->fetch();
             $bandaVo = $data ? BandaVo::fromArray($data) : null;
@@ -101,6 +104,7 @@ class BandaModel extends Model
         try {
             $db = self::getConnection();
             $stm = $db->prepare($sql);
+            // ['id'=>valor, 'nombre'=>valor, 'num_integrantes'=>valor,...]
             $params = $vo->toArray();
             foreach ($params as $param => $value) {
                 $stm->bindValue($param, $value);

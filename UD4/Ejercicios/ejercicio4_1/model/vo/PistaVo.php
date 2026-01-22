@@ -60,7 +60,7 @@ class PistaVo implements Vo
             return;
         }
 
-        $this->titulo = $vo->titulo;
-        $this->duracion = $vo->duracion;
+        $this->titulo = $vo->getTitulo()??$this->titulo;
+        $this->duracion = $vo->getDuracion()??$this->duracion;
     }
 }
