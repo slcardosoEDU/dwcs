@@ -48,9 +48,13 @@ class BandaController
     public function store()
     {
         try {
-            
+            $this->request->validate([
+                'nombre'=>'required|string|max:100',
+                'num_integrantes'=>'required|int|max:99|min:1',
+                'genero'=> 'required|string|max:50',
+                'nacionalidad' => 'string|max:50'
+            ]);
             $data = $this->request->body();
-            $validation_errors = [];
 
             $banda = BandaVo::fromArray($data);
             $banda = BandaModel::add($banda);
@@ -67,6 +71,13 @@ class BandaController
     public function update(int $id)
     {
         try {
+
+            $this->request->validate([
+                'nombre'=>'string|max:100',
+                'num_integrantes'=>'int|max:99|min:1',
+                'genero'=> 'string|max:50',
+                'nacionalidad' => 'string|max:50'
+            ]);
             
             //Obtenemos banda actual.
             $banda = BandaModel::get($id);
