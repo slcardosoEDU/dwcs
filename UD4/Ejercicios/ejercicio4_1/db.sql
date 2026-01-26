@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS banda(
     nacionalidad VARCHAR (50)
 );
 
-CREATE TABLE disco(
+CREATE TABLE IF NOT EXISTS  disco(
     id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(100) NOT NULL,
     anho DECIMAL(4,0) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE disco(
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE pista(
+CREATE TABLE IF NOT EXISTS  pista(
     id_disco INT,
     numero DECIMAL(2,0),
     titulo VARCHAR(100) NOT NULL,
@@ -26,4 +26,11 @@ CREATE TABLE pista(
     PRIMARY KEY (id_disco, numero),
     CONSTRAINT fk_pista_disco FOREIGN KEY (id_disco) REFERENCES disco(id)
         ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS usuario(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(128) NOT NULL,
+    email VARCHAR(256) NOT NULL UNIQUE,
+    password VARCHAR(256) NOT NULL
 );

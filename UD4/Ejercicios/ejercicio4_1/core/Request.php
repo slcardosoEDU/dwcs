@@ -51,19 +51,19 @@ class Request
                     continue;
                 }
                 //Limites de magnitud
-                if(str_starts_with($rule, 'max:')){
-                    $max = (int)explode(':',$rule)[1];
-                    $dataLen = is_string($data[$field]) ? strlen($data[$field]):$data[$field];
-                    if(isset($data[$field]) && $dataLen>$max){
+                if (str_starts_with($rule, 'max:')) {
+                    $max = (int) explode(':', $rule)[1];
+                    $dataLen = is_string($data[$field]) ? strlen($data[$field]) : $data[$field];
+                    if (isset($data[$field]) && $dataLen > $max) {
                         $errors[$field][] = "El campo no puede ser mayor de $max";
                         continue;
                     }
                 }
 
-                if(str_starts_with($rule, 'min:')){
-                    $min = (int)explode(':',$rule)[1];
-                    $dataLen = is_string($data[$field]) ? strlen($data[$field]):$data[$field];
-                    if(isset($data[$field]) && $dataLen<$min){
+                if (str_starts_with($rule, 'min:')) {
+                    $min = (int) explode(':', $rule)[1];
+                    $dataLen = is_string($data[$field]) ? strlen($data[$field]) : $data[$field];
+                    if (isset($data[$field]) && $dataLen < $min) {
                         $errors[$field][] = "El campo no puede ser menor de $min";
                         continue;
                     }
