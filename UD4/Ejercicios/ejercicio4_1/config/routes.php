@@ -11,6 +11,8 @@ $router->put('/bandas/{id}',[BandaController::class, 'update']);
 $router->delete('/bandas/{id}',[BandaController::class, 'destroy']);
 
 //Endpoints Auth
-$router->post('/index',[AuthController::class, 'index']);
+$router->post('/login',[AuthController::class, 'login']);
 $router->post('/register',[AuthController::class, 'register']);
+$router->get('/autenticado',[AuthController::class, 'validateToken']);
+
 

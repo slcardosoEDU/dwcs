@@ -1,5 +1,5 @@
 <?php
-namespace Ejercicios\Ejercicio4_1\Model;
+namespace Ejercicios\ejercicio4_1\model;
 
 use Ejercicios\ejercicio4_1\model\vo\UsuarioVo;
 use PDOException;
@@ -18,7 +18,7 @@ class UsuarioModel extends Model
             $stm = $db->prepare($sql);
             $stm->bindValue('nombre', $vo->getNombre(), PDO::PARAM_STR);
             $stm->bindValue('email', $vo->getEmail(), PDO::PARAM_STR);
-            $stm->bindValue('password', password_hash($vo->getPassword()), PDO::PARAM_STR);
+            $stm->bindValue('password', password_hash($vo->getPassword(),PASSWORD_DEFAULT), PDO::PARAM_STR);
             if (!$stm->execute() || !$stm->rowCount() == 1) {
                 throw new Exception('Error en INSERT ' . $stm->rowCount() . ' filas afectadas');
             }
@@ -37,7 +37,7 @@ class UsuarioModel extends Model
     public static function getByEmailPassword(string $email, string $password): ?UsuarioVo
     {
         $sql = "SELECT id, nombre, email, password
-                FROM ususario
+                FROM usuario
                 WHERE email = :email";
         $vo = null;
         try {

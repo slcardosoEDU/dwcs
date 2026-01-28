@@ -22,6 +22,12 @@ class Request
         $body_text = file_get_contents('php://input');
         return json_decode($body_text, true) ?? [];
     }
+
+    public function getHeader(string $headerKey){
+        $headers = getallheaders();
+        return $headers[$headerKey];
+    }
+
     public function validate(array $rules)
     {
         $data = $this->body();
