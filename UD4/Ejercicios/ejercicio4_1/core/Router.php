@@ -6,24 +6,24 @@ class Router
 
     private $routes = [];
 
-    public function get(string $uri, array $handler)
+    public function get(string $uri, array $handler, array $middlewares = [])
     {
-        $this->routes[] = ['method' => 'GET', 'uri' => $uri, 'handler' => $handler];
+        $this->routes[] = ['method' => 'GET', 'uri' => $uri, 'handler' => $handler, 'middlewares' => $middlewares];
     }
 
-    public function post(string $uri, array $handler)
+    public function post(string $uri, array $handler, array $middlewares = [])
     {
-        $this->routes[] = ['method' => 'POST', 'uri' => $uri, 'handler' => $handler];
+        $this->routes[] = ['method' => 'POST', 'uri' => $uri, 'handler' => $handler, 'middlewares' => $middlewares];
     }
 
-    public function put(string $uri, array $handler)
+    public function put(string $uri, array $handler, array $middlewares = [])
     {
-        $this->routes[] = ['method' => 'PUT', 'uri' => $uri, 'handler' => $handler];
+        $this->routes[] = ['method' => 'PUT', 'uri' => $uri, 'handler' => $handler, 'middlewares' => $middlewares];
     }
 
-    public function delete(string $uri, array $handler)
+    public function delete(string $uri, array $handler, array $middlewares = [])
     {
-        $this->routes[] = ['method' => 'DELETE', 'uri' => $uri, 'handler' => $handler];
+        $this->routes[] = ['method' => 'DELETE', 'uri' => $uri, 'handler' => $handler, 'middlewares' => $middlewares];
 
     }
 
@@ -45,6 +45,12 @@ class Router
                 // Compruebo si la uri encaja
                 if (preg_match($patern, $request->uri(), $matches)) {
                     unset($matches[0]);
+
+                    //Procesamos la pila de middlewares
+                    foreach($route['middlewares'] as $middleware){
+                        (new $middleware())->handle($request);
+                    }
+
                     // Llamar al método del controlador adecuado
                     $controller = new $route['handler'][0]();
                     call_user_func_array([$controller, $route['handler'][1]], $matches);

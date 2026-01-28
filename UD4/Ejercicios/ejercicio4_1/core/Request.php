@@ -1,11 +1,14 @@
 <?php
 
 namespace Ejercicios\ejercicio4_1\core;
+
+use Ejercicios\ejercicio4_1\model\vo\UsuarioVo;
 /**
  * Wrapper del HTTP request.
  */
 class Request
 {
+    public ?UsuarioVo $usuario = null;
 
     public function uri(): string
     {

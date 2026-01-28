@@ -10,7 +10,7 @@ use Firebase\JWT\Key;
 
 class AuthController{
     private Request $request;
-    private $secretKey = "sad98723hjnd0912.si237dh1209dhEHDFRJWI2d2..3";
+    
 
     public function __construct(){
         $this->request = new Request();
@@ -50,25 +50,7 @@ class AuthController{
         Response::json($usuario->toArray(),201);
     }
 
-    public function validateToken(){
-        $token = $this->request->getHeader('Authorization');
-
-        if(!isset($token)){
-            Response::json(["messaje"=>"Usuario no autenticado."],401);
-            return;
-        }
-
-        $token = str_replace('Bearer ','',$token);
-
-        try {
-            $payload = JWT::decode($token, new Key($this->secretKey,'HS256'));
-            Response::json(["messaje"=>"Usuario con id $payload->sub e email $payload->email. Autenticado!!"],200);
-        } catch (Exception $th) {
-            Response::json(["messaje"=>"Usuario no autenticado."],401);
-        }
-        
-
-    }
+   
 
     private function createJwt(UsuarioVo $vo,  $expireSeconds){
         
@@ -79,7 +61,7 @@ class AuthController{
             "exp" => time() + $expireSeconds
         ];
         
-        $jwt = JWT::encode($payload, $this->secretKey, 'HS256');
+        $jwt = JWT::encode($payload, $_ENV['JWT_SECRET_KEY'], $_ENV['JWT_ALGO']);
 
         return $jwt;
     }
