@@ -1,6 +1,6 @@
 <?php
 
-namespace Ejercicios\ejercicio4_1\model;
+namespace Ejercicios\ejercicio4_2\model;
 
 use Ejercicios\ejercicio4_2\model\vo\CasaVo;
 use PDO;
