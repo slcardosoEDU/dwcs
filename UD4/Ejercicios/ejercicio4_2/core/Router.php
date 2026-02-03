@@ -52,7 +52,7 @@ class Router
                     }
 
                     // Llamar al método del controlador adecuado
-                    $controller = new $route['handler'][0]();
+                    $controller = new $route['handler'][0]($request);
                     call_user_func_array([$controller, $route['handler'][1]], $matches);
                     return;
                 }

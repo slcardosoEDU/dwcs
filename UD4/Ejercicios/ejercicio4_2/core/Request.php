@@ -15,7 +15,7 @@ class Request
      */
     public function uri(): string
     {
-        //TODO
+        return $_SERVER['REQUEST_URI'];
     }
 
     /**
@@ -24,7 +24,7 @@ class Request
      */
     public function method(): string
     {
-        //TODO
+        return $_SERVER['REQUEST_METHOD'];
     }
 
     /**
@@ -33,16 +33,16 @@ class Request
      */
     public function body(): array
     {
-        //TODO
+        return json_decode(file_get_contents('php://input'),true);
     }
 
     /**
      * @param string $headerKey Clave de la cabecera HTTP
      * @return Valor de la cabecera HTTP o null si no se encuentra.
      */
-    public function getHeader(string $headerKey):?string
+    public function getHeader(string $headerKey): ?string
     {
-        //TODO
+        return getallheaders()[$headerKey];
     }
 
     /**

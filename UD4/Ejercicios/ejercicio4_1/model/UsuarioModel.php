@@ -1,7 +1,7 @@
 <?php
-namespace Ejercicios\ejercicio4_1\model;
+namespace Ejercicios\ejercicio4_2\model;
 
-use Ejercicios\ejercicio4_1\model\vo\UsuarioVo;
+use Ejercicios\ejercicio4_2\model\vo\UsuarioVo;
 use PDOException;
 use PDO;
 use Exception;

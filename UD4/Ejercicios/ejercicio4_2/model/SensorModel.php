@@ -67,6 +67,7 @@ class SensorModel extends Model
             $result = $sensor;
         } catch (PDOException $e) {
             error_log($e->getMessage());
+            $result = null;
         } finally {
             $db = null;
         }
