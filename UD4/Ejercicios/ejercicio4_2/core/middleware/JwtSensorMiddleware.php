@@ -2,6 +2,7 @@
 namespace Ejercicios\ejercicio4_2\core\middleware;
 use Ejercicios\ejercicio4_2\core\Request;
 use Ejercicios\ejercicio4_2\core\Response;
+use Ejercicios\ejercicio4_2\model\SensorModel;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
@@ -20,7 +21,7 @@ class JwtSensorMiddleware implements Middleware
                 Response::json(['Error' => 'Token incorrecto para sensor.'],401);
                 exit;
             }
-
+            $request->sensor = SensorModel::get($payload->sub);
         } catch (\Throwable $th) {
             Response::json(['Error' => 'Autenticación fallida.'],401);
             exit;

@@ -3,12 +3,15 @@
 namespace Ejercicios\ejercicio4_2\core;
 
 use Ejercicios\ejercicio4_2\model\vo\UsuarioVo;
+use Ejercicios\ejercicio4_2\model\vo\SensorVo;
 /**
  * Wrapper del HTTP request.
  */
 class Request
 {
     public ?UsuarioVo $usuario = null;
+    public ?SensorVo $sensor = null;
+
 
     /**
      * @return Uri de la pertición HTTP

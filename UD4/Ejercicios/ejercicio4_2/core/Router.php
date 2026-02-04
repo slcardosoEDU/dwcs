@@ -34,7 +34,7 @@ class Router
             // Compruebo si el método coincide
             if ($route['method'] == $request->method()) {
                 // Creo el patron para ese endpoint concreto.
-                $patern = '#^' . preg_replace('#\{[\w]+\}#', '([\w]+)', $route['uri']) . '$#';
+                $patern = '#^' . preg_replace('#\{[\w]+\}#', '([\w -]+)', $route['uri']) . '$#';
                 // Para /municipios/{id}
                 //  $patern = '#^/municipios/([\w]+)$#'
                 // Para /municipios

@@ -35,6 +35,49 @@ class SensorModel extends Model
             }
         } catch (PDOException $e) {
             error_log($e->getMessage());
+            $result = null;
+        } finally {
+            $db = null;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Devuelve una lista de sensores que coincidan con los filtros indicados.
+     * @param mixed $localizacion
+     * @param mixed $casaID
+     * @return SensorVo[]
+     */
+    public static function getFilter(?string $localizacion = null, ?int $casaID = null): array
+    {
+        $sql = 'SELECT mac, localizacion, casa_id 
+        FROM sensor WHERE 1=1';
+        $db = null;
+        $result = [];
+        $params = [];
+        if ($localizacion !== null) {
+            $sql .= ' AND localizacion = :localizacion';
+            $params['localizacion'] = $localizacion;
+        }
+        if ($casaID !== null) {
+            $sql .= ' AND casa_id = :casa_id';
+            $params['casa_id'] = $casaID;
+
+        }
+        try {
+
+            $db = self::getConnection();
+            $stmt = $db->prepare($sql);
+            $stmt->execute($params);
+            foreach($stmt as $row){
+                $result[] = SensorVo::fromArray($row);
+            }
+            
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            $result = [];
+
         } finally {
             $db = null;
         }
