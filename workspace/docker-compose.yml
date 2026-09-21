@@ -5,6 +5,8 @@ services:
       context: ./docker
       dockerfile: Dockerfile
     container_name: php-apache
+    environment:
+      TZ: "Europe/Madrid"
     ports:
       - "80:80"
     volumes:
