@@ -1,2 +1,6 @@
-# dwcs
-Repositorio del módulo de DWCS de DAW en el IES Armando Cotarelo Valledor. Curso 2026-27
+# Ejercicios de Desarrollo Web en Contorno Servidor
+## DAW - IES Armando Cotarelo Valledor - Curso 26/27
+# [Entorno de desarrollo](workspace)
+> Estructura básica de proyectos y entorno de desarrollo con contenedores que utilizaremos durante el curso.
+# [Unidad 1](UD1)
+ > **Introducción a PHP** - **Interacción con BBDD** - **Depuración de código** - **TDD**
