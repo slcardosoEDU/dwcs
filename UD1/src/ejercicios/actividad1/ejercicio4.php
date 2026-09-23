@@ -6,7 +6,7 @@ function volumenCilindro(float $r, float $h): float
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
