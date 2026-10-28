@@ -1,39 +1,41 @@
 <?php
 require_once "bd.php";
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        //Valido
-        $nic = $_POST['nic']??'';
-        $pass = $_POST['pass']??'';
-        $error = [];
-        if(empty($nic)){
-            $error[] = "El nic es un campo obligatorio.";
-        }
-        
-        if(empty($pass)){
-            $error[] = "El nic es un campo obligatorio.";
-        }
-
-        //Recupero nic de la BD
-        if(count($error) === 0){
-            $usuario = getUserByNic($nic);
-            if(!$usuario || $usuario['contrasena'] != sha1($pass)){
-                $error[] = "Usuario o contraseña no coinciden";
-            }else{
-                
-                header("Location: principal.html");
-                die();
-            }
-        }
-        //Compruebo contrasena y si es correcto
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //Valido
+    $nic = $_POST['nic'] ?? '';
+    $pass = $_POST['pass'] ?? '';
+    $error = [];
+    if (empty($nic)) {
+        $error[] = "El nic es un campo obligatorio.";
     }
+
+    if (empty($pass)) {
+        $error[] = "El nic es un campo obligatorio.";
+    }
+
+    //Recupero nic de la BD
+    if (count($error) === 0) {
+        $usuario = getUserByNic($nic);
+        if (!$usuario || $usuario['contrasena'] != sha1($pass)) {
+            $error[] = "Usuario o contraseña no coinciden";
+        } else {
+
+            header("Location: principal.html");
+            die();
+        }
+    }
+    //Compruebo contrasena y si es correcto
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
+
 <body>
     <h1>Acceso a la web</h1>
     <form action="" method="post">
@@ -55,4 +57,5 @@ require_once "bd.php";
     ?>
     No tienes cuenta? <a href="registro.php">Registrate</a>
 </body>
+
 </html>
