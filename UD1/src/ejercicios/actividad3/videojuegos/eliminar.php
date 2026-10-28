@@ -1,3 +1,22 @@
+<?php
+    require_once "accesodatos.php";
+    $mensaje = "Error inesperado ";
+    $id = $_GET['id'];
+    if(!isset($id) || !is_numeric($id)){
+        $mensaje = "Error. No se puede identificar el videojuego.";
+    }else{
+        $videojuego = getVideojuego($id);
+        if(!$videojuego){
+        $mensaje = "Error. No se puede recuperar el videojuego indicado.";
+        }else{
+            if(deleteVideojuego($id)){
+                $mensaje = "Se ha eliminado el videojuego ".$videojuego['nombre'];
+            }else{
+                $mensaje = "Error eliminando el videojuego ".$videojuego['nombre'];
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,8 +27,8 @@
 </head>
 
 <body>
-    <h1>Se ha eliminado el videojuego
-        NOMBRE_VIDEOJUEGO <!-- Tiene que ser dinámico     -->
+    <h1>
+        <?= $mensaje ?>
     </h1>
     <a href="index.php">Ver todos</a>
 </body>
