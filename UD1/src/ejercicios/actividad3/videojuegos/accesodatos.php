@@ -127,3 +127,33 @@ function getAllVideojuegos(): array
 
     return $toret;
 }
+
+
+/**
+ * @param $filtros array que contine los filtros para recuperar videojuegos de la BD
+ * @return array con todos los videojuegos que cumplan los filtros en formato de matriz. Cada fila del array
+ * contiene otro array con el formato [id, nombre, plataforma, anio_lanzamiento, genero].
+ */
+function getViedojuegos($filtros): array
+{
+    $toret = [];
+    $sql = "SELECT id, nombre, plataforma, anio_lanzamiento, genero FROM videojuegos WHERE 1 = 1";
+    //CONSTRUCCION DE QUERY
+    foreach($filtros as $filtro=>$valor){
+        $sql.= " AND $filtro LIKE '%$valor%' ";
+    }
+    try {
+        $db = getConnection();
+        $statement = $db->query($sql);
+        if ($statement) {
+            $toret = $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+    } catch (PDOException $th) {
+        error_log("Error obteniendo todos los videojuegos [$sql] " . $th->getMessage());
+        $toret = [];
+    } finally {
+        $db = null;
+    }
+
+    return $toret;
+}
