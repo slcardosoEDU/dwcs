@@ -1,18 +1,19 @@
 <?php
 require_once "accesodatos.php";
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //Obtengo filtros
-    $filtros = [];
-    foreach ($_POST as $param => $valor) {
-        if (str_starts_with($param, 'filtro_') && !empty($valor)) {
-            $param = substr($param, 7);
-            $filtros[$param] = $valor;
-        }
+$order = $_REQUEST['order'] ?? null;
+$order = empty($order) ? null : $order;
+$filtros = [];
+$filtros_url = '';
+
+foreach ($_REQUEST as $param => $valor) {
+    if (str_starts_with($param, 'filtro_') && !empty($valor)) {
+        $filtros_url .= '&'.$param.'='.$valor;
+        $param = substr($param, 7);
+        $filtros[$param] = $valor;
     }
-    $juegos = getViedojuegos($filtros);
-} else {
-    $juegos = getAllVideojuegos();
 }
+
+$juegos = getViedojuegos($filtros, $order);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -28,16 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <legend>Filtros de búsqueda</legend>
         <form action="" method="post">
             <label for="filtro_nombre">Nombre</label>
-            <input type="text" name="filtro_nombre"><br>
+            <input type="text" name="filtro_nombre" value=<?= $_REQUEST['filtro_nombre']??'' ?>><br>
 
             <label for="filtro_plataforma">Plataforma</label>
-            <input type="text" name="filtro_plataforma"><br>
+            <input type="text" name="filtro_plataforma" value=<?= $_REQUEST['filtro_plataforma']??'' ?>><br>
 
             <label for="filtro_lanzamiento">Año de lanzamiento</label>
-            <input type="number" name="filtro_anio_lanzamiento"><br>
+            <input type="number" name="filtro_anio_lanzamiento" value=<?= $_REQUEST['filtro_anio_lanzamiento']??'' ?>><br>
 
             <label for="filtro_genero">Género</label>
-            <input type="text" name="filtro_genero"><br>
+            <input type="text" name="filtro_genero" value=<?= $_REQUEST['filtro_genero']??'' ?>><br>
 
             <button type="submit">Buscar</button>
         </form>
@@ -45,10 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h1>Videojuegos registrados</h1>
     <table>
         <tr>
-            <th>Nombre</th>
-            <th>Plataforma</th>
-            <th>Año</th>
-            <th>Género</th>
+            <th><a href="/ejercicios/actividad3/videojuegos/index.php?order=nombre<?= $filtros_url ?>">Nombre</a></th>
+            <th> <a href="?order=plataforma<?= $filtros_url ?>">Plataforma</a></th>
+            <th> <a href="?order=anio_lanzamiento<?= $filtros_url ?>">Año</a></th>
+            <th> <a href="?order=genero<?= $filtros_url ?>">Género</a></th>
+
+
             <th colspan="2">Acciones</th>
         </tr>
         <!-- Datos de ejemplo. Tiene que ser dinámico -->

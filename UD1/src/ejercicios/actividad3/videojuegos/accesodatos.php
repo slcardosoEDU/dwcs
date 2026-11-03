@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Funciones de manipulación de datos en la BD.
  */
@@ -131,10 +130,11 @@ function getAllVideojuegos(): array
 
 /**
  * @param $filtros array que contine los filtros para recuperar videojuegos de la BD
+ * @param $order puede ser los estrings nombre, plataforma, anio_lanzamiento o genero. Si es nul devuelve los resultados sin orden.
  * @return array con todos los videojuegos que cumplan los filtros en formato de matriz. Cada fila del array
  * contiene otro array con el formato [id, nombre, plataforma, anio_lanzamiento, genero].
  */
-function getViedojuegos($filtros): array
+function getViedojuegos($filtros, $order= null): array
 {
     $toret = [];
     $sql = "SELECT id, nombre, plataforma, anio_lanzamiento, genero FROM videojuegos WHERE 1=1";
@@ -142,6 +142,10 @@ function getViedojuegos($filtros): array
     foreach($filtros as $filtro=>$valor){
         $sql.= " AND $filtro LIKE '%$valor%' ";
     }
+    if(isset($order) && chechValidOrder($order)){
+        $sql .= " ORDER BY $order ";
+    }
+
     try {
         $db = getConnection();
         $statement = $db->query($sql);
@@ -156,4 +160,9 @@ function getViedojuegos($filtros): array
     }
 
     return $toret;
+}
+
+
+function chechValidOrder(string $order):bool{
+    return $order=='nombre' || $order == 'plataforma' || $order == 'anio_lanzamiento' || $order == 'genero';
 }
