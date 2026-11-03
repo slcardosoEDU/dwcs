@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php
         foreach ($juegos as $juego) {
             echo "<tr>";
-            echo "    <td>" . $juego['nombre'] . "</td>";
+            echo "    <td>" . htmlspecialchars($juego['nombre']) . "</td>";
             echo "    <td>" . $juego['plataforma'] . "</td>";
             echo "    <td>" . $juego['anio_lanzamiento'] . "</td>";
             echo "    <td>" . $juego['genero'] ?? "" . "</td>";

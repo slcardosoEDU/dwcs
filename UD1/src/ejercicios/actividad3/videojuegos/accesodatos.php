@@ -137,7 +137,7 @@ function getAllVideojuegos(): array
 function getViedojuegos($filtros): array
 {
     $toret = [];
-    $sql = "SELECT id, nombre, plataforma, anio_lanzamiento, genero FROM videojuegos WHERE 1 = 1";
+    $sql = "SELECT id, nombre, plataforma, anio_lanzamiento, genero FROM videojuegos WHERE 1=1";
     //CONSTRUCCION DE QUERY
     foreach($filtros as $filtro=>$valor){
         $sql.= " AND $filtro LIKE '%$valor%' ";
