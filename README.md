@@ -32,3 +32,10 @@
  - [Arrays](UD1/src/ejemplos/arrays.php)
  - [POO](UD1/src/ejemplos/poo)
  - [BBDD](UD1/src/ejemplos/bbdd)
+
+ # [Unidad 2](UD2)
+ > **Introducción a PHP** - **Interacción con BBDD** - **Depuración de código** - **TDD**
+ ## Ejercicios
+
+ ## Ejemplos
+ - [Cookies](UD2/src/ejemplos/cookies.php)
