@@ -1,0 +1,12 @@
+{
+    "chat.disableAIFeatures": true,
+
+    "php.suggest.basic": true,
+
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": false
+    },
+    "chat.agent.enabled": false
+}
