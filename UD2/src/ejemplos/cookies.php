@@ -1,7 +1,6 @@
 <?php
+//Leer cookie
 
-//Escribir cookie
-//OJO!
 if (isset($_COOKIE['contador'])) {
     $cont = intval($_COOKIE['contador']);
 } else {
@@ -9,6 +8,8 @@ if (isset($_COOKIE['contador'])) {
 }
 $cont++;
 
+//Escribir cookie
+//OJO!
 setcookie(
     name: "contador",
     value: $cont,
@@ -20,3 +21,15 @@ setcookie(
 );
 
 echo "Has entrado $cont veces";
+
+//Eliminar cookie en cliente: la hacemos caducar.
+
+setcookie(
+    name: "contador",
+    value: $cont,
+    expires_or_options: time() - 1000, //Tiempo del pasado.
+    path: "/ejemplos",
+    domain: "",
+    secure: true,
+    httponly: true
+);
