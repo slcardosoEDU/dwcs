@@ -36,6 +36,6 @@
  # [Unidad 2](UD2)
  > **Introducción a PHP** - **Interacción con BBDD** - **Depuración de código** - **TDD**
  ## Ejercicios
-
+ ### [Actividad 1](UD2/src/ejercicios/actividad1/index.php)
  ## Ejemplos
  - [Cookies](UD2/src/ejemplos/cookies.php)

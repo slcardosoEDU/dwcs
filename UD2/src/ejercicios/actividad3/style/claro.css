@@ -1,0 +1,37 @@
+body {
+    padding: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+    background-color: #F1F0E8;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #89A8B2;
+
+}
+
+h1{
+    text-transform: uppercase;
+    color:#89A8B2;
+    background-color: #E5E1DA;
+}
+
+h2{
+    text-decoration: underline;
+    text-transform: uppercase;
+    color: #89A8B2;
+    background-color: #E5E1DA;
+}
+p{
+    padding-left: 1%;
+    padding-right: 1%;
+    text-align: justify;
+    
+
+}
+
+strong{
+    color: #B3C8CF;
+}
+a{
+    color: #B3C8CF;
+}
